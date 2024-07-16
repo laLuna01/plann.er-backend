@@ -2,8 +2,6 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
-import { getMailClient } from "../lib/mail";
-import nodemailer from "nodemailer";
 import { dayjs } from "../lib/dayjs";
 import { ClientError } from "../errors/client-error";
 
@@ -14,7 +12,7 @@ export async function updateTrip(app: FastifyInstance) {
                 tripId: z.string().uuid(),
             }),
             body: z.object({
-                destination: z.string().min(4),
+                destination: z.string(),
                 starts_at: z.coerce.date(),
                 ends_at: z.coerce.date(),
             })

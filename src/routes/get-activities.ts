@@ -38,13 +38,13 @@ export async function getActivities(app: FastifyInstance) {
             const date = dayjs(trip.starts_at).add(index, 'days');
 
             return {
-                date: date.toDate,
+                date: date.toDate(),
                 activities: trip.activities.filter(activity => {
                     return dayjs(activity.occurs_at).isSame(date, 'day')
                 }),
             }
         });
 
-        return { activities: trip.activities }
+        return { activities }
     })
 }

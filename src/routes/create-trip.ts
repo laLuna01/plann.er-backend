@@ -12,7 +12,7 @@ export async function createTrip(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>().post('/trips', {
         schema: {
             body: z.object({
-                destination: z.string().min(4),
+                destination: z.string(),
                 starts_at: z.coerce.date(),
                 ends_at: z.coerce.date(),
                 owner_name: z.string(),

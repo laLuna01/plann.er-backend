@@ -1,4 +1,5 @@
 import fastify from "fastify";
+import { env } from "./env";
 import { createTrip } from "./routes/create-trip";
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 import { confirmTrip } from "./routes/confirm-trip";
@@ -14,7 +15,7 @@ import { updateTrip } from "./routes/update-trip";
 import { getTripDetails } from "./routes/get-trip-details";
 import { getParticipant } from "./routes/get-participant";
 import { errorHandler } from "./error-handler";
-import { env } from "./env";
+import { updateParticipant } from "./routes/update-participant";
 
 const app = fastify();
 
@@ -39,6 +40,11 @@ app.register(createInvite);
 app.register(updateTrip);
 app.register(getTripDetails);
 app.register(getParticipant);
+app.register(updateParticipant);
+
+if (!env.DATABASE_URL || !env.API_BASE_URL || !env.WEB_BASE_URL) {
+    throw new Error('Variáveis de ambiente obrigatórias não estão definidas');
+  }
 
 app.listen({ port: env.PORT }).then(() => {
     console.log("server running");
